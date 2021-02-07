@@ -7,20 +7,6 @@
 
 using namespace Rcpp;
 
-// C_apply_rr
-arma::cube C_apply_rr(const arma::cube& x, const arma::mat rr, const arma::umat index, const arma::umat complement);
-RcppExport SEXP _hesim_C_apply_rr(SEXP xSEXP, SEXP rrSEXP, SEXP indexSEXP, SEXP complementSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::cube& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const arma::mat >::type rr(rrSEXP);
-    Rcpp::traits::input_parameter< const arma::umat >::type index(indexSEXP);
-    Rcpp::traits::input_parameter< const arma::umat >::type complement(complementSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_apply_rr(x, rr, index, complement));
-    return rcpp_result_gen;
-END_RCPP
-}
 // C_incr_effect
 std::vector<double> C_incr_effect(std::vector<double> x, std::vector<double> y, int n_samples, int n_strategies, int n_grps);
 RcppExport SEXP _hesim_C_incr_effect(SEXP xSEXP, SEXP ySEXP, SEXP n_samplesSEXP, SEXP n_strategiesSEXP, SEXP n_grpsSEXP) {
@@ -617,6 +603,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// C_apply_rr
+arma::cube C_apply_rr(const arma::cube& x, const arma::mat rr, const arma::umat index, const arma::umat complement);
+RcppExport SEXP _hesim_C_apply_rr(SEXP xSEXP, SEXP rrSEXP, SEXP indexSEXP, SEXP complementSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::cube& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::mat >::type rr(rrSEXP);
+    Rcpp::traits::input_parameter< const arma::umat >::type index(indexSEXP);
+    Rcpp::traits::input_parameter< const arma::umat >::type complement(complementSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_apply_rr(x, rr, index, complement));
+    return rcpp_result_gen;
+END_RCPP
+}
+// C_expmat
+arma::mat C_expmat(arma::mat x);
+RcppExport SEXP _hesim_C_expmat(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(C_expmat(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // C_rowmax
 arma::colvec C_rowmax(arma::mat x);
 RcppExport SEXP _hesim_C_rowmax(SEXP xSEXP) {
@@ -638,64 +649,4 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(C_rowmax_index(x));
     return rcpp_result_gen;
 END_RCPP
-}
-
-RcppExport SEXP _rcpp_module_boot_distributions();
-
-static const R_CallMethodDef CallEntries[] = {
-    {"_hesim_C_apply_rr", (DL_FUNC) &_hesim_C_apply_rr, 4},
-    {"_hesim_C_incr_effect", (DL_FUNC) &_hesim_C_incr_effect, 5},
-    {"_hesim_C_ceac", (DL_FUNC) &_hesim_C_ceac, 6},
-    {"_hesim_C_mce", (DL_FUNC) &_hesim_C_mce, 6},
-    {"_hesim_C_enmbpi", (DL_FUNC) &_hesim_C_enmbpi, 6},
-    {"_hesim_tmax_max", (DL_FUNC) &_hesim_tmax_max, 1},
-    {"_hesim_C_ctstm_summary", (DL_FUNC) &_hesim_C_ctstm_summary, 3},
-    {"_hesim_C_rgengamma", (DL_FUNC) &_hesim_C_rgengamma, 4},
-    {"_hesim_C_rpwexp", (DL_FUNC) &_hesim_C_rpwexp, 3},
-    {"_hesim_C_rcat", (DL_FUNC) &_hesim_C_rcat, 2},
-    {"_hesim_C_rdirichlet_mat", (DL_FUNC) &_hesim_C_rdirichlet_mat, 2},
-    {"_hesim_C_normalize_transprobs", (DL_FUNC) &_hesim_C_normalize_transprobs, 1},
-    {"_hesim_C_cohort_dtstm_sim_stateprobs", (DL_FUNC) &_hesim_C_cohort_dtstm_sim_stateprobs, 2},
-    {"_hesim_C_ctstm_sim_disease", (DL_FUNC) &_hesim_C_ctstm_sim_disease, 10},
-    {"_hesim_C_ctstm_indiv_stateprobs", (DL_FUNC) &_hesim_C_ctstm_indiv_stateprobs, 11},
-    {"_hesim_C_indiv_ctstm_wlos", (DL_FUNC) &_hesim_C_indiv_ctstm_wlos, 7},
-    {"_hesim_C_indiv_ctstm_starting", (DL_FUNC) &_hesim_C_indiv_ctstm_starting, 6},
-    {"_hesim_C_indiv_ctstm_los", (DL_FUNC) &_hesim_C_indiv_ctstm_los, 4},
-    {"_hesim_C_psm_curves_summary", (DL_FUNC) &_hesim_C_psm_curves_summary, 4},
-    {"_hesim_C_psm_sim_stateprobs", (DL_FUNC) &_hesim_C_psm_sim_stateprobs, 6},
-    {"_hesim_C_statevals_sim", (DL_FUNC) &_hesim_C_statevals_sim, 3},
-    {"_hesim_C_sim_ev", (DL_FUNC) &_hesim_C_sim_ev, 6},
-    {"_hesim_C_sim_los", (DL_FUNC) &_hesim_C_sim_los, 5},
-    {"_hesim_C_test_trapz", (DL_FUNC) &_hesim_C_test_trapz, 2},
-    {"_hesim_C_test_is_absorbing", (DL_FUNC) &_hesim_C_test_is_absorbing, 1},
-    {"_hesim_C_test_trans_mat_trans_id", (DL_FUNC) &_hesim_C_test_trans_mat_trans_id, 2},
-    {"_hesim_C_test_trans_mat_to", (DL_FUNC) &_hesim_C_test_trans_mat_to, 2},
-    {"_hesim_C_test_trans_mat_n_trans", (DL_FUNC) &_hesim_C_test_trans_mat_n_trans, 1},
-    {"_hesim_C_test_rtruncnorm", (DL_FUNC) &_hesim_C_test_rtruncnorm, 4},
-    {"_hesim_C_test_xptr_test_time_fun", (DL_FUNC) &_hesim_C_test_xptr_test_time_fun, 1},
-    {"_hesim_C_test_obs_index", (DL_FUNC) &_hesim_C_test_obs_index, 4},
-    {"_hesim_C_test_obs_index_ids", (DL_FUNC) &_hesim_C_test_obs_index_ids, 5},
-    {"_hesim_test_quad_dnorm", (DL_FUNC) &_hesim_test_quad_dnorm, 2},
-    {"_hesim_test_quad_ier1", (DL_FUNC) &_hesim_test_quad_ier1, 0},
-    {"_hesim_test_quad_ier4", (DL_FUNC) &_hesim_test_quad_ier4, 0},
-    {"_hesim_test_quad_ier5", (DL_FUNC) &_hesim_test_quad_ier5, 0},
-    {"_hesim_test_riemann_x2", (DL_FUNC) &_hesim_test_riemann_x2, 1},
-    {"_hesim_test_cum_riemann_x2", (DL_FUNC) &_hesim_test_cum_riemann_x2, 1},
-    {"_hesim_C_test_rtrunc_repeat", (DL_FUNC) &_hesim_C_test_rtrunc_repeat, 2},
-    {"_hesim_C_test_rsurv", (DL_FUNC) &_hesim_C_test_rsurv, 3},
-    {"_hesim_C_test_add_constant_int", (DL_FUNC) &_hesim_C_test_add_constant_int, 2},
-    {"_hesim_C_test_add_constant_double", (DL_FUNC) &_hesim_C_test_add_constant_double, 2},
-    {"_hesim_C_test_pv", (DL_FUNC) &_hesim_C_test_pv, 4},
-    {"_hesim_C_test_seq", (DL_FUNC) &_hesim_C_test_seq, 3},
-    {"_hesim_C_test_max_lt", (DL_FUNC) &_hesim_C_test_max_lt, 2},
-    {"_hesim_test_zeroin", (DL_FUNC) &_hesim_test_zeroin, 0},
-    {"_hesim_C_rowmax", (DL_FUNC) &_hesim_C_rowmax, 1},
-    {"_hesim_C_rowmax_index", (DL_FUNC) &_hesim_C_rowmax_index, 1},
-    {"_rcpp_module_boot_distributions", (DL_FUNC) &_rcpp_module_boot_distributions, 0},
-    {NULL, NULL, 0}
-};
-
-RcppExport void R_init_hesim(DllInfo *dll) {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
 }

@@ -30,7 +30,7 @@ arma::mat apply_rr(const arma::mat &x, const arma::rowvec rr, const arma::umat i
   return y;
 }
 
-/**
+/***************************************************************************//** 
  * Apply relative risks to transition probability matrices. See the documentation 
  * for the @c R function @c apply_rr() for more details.
  * @param x A cube where each slice is a square transition probability matrix.
@@ -44,7 +44,7 @@ arma::mat apply_rr(const arma::mat &x, const arma::rowvec rr, const arma::umat i
  * (i.e., computed as 1 less the sum of all other elements in that row). There
  * can be at most one complementary column for each row of a matrix @p x. 
  * @return The same as described in the @c R function @c apply_rr().
- */
+ ******************************************************************************/
 // [[Rcpp::export]]
 arma::cube C_apply_rr(const arma::cube &x, const arma::mat rr, const arma::umat index,
                      const arma::umat complement) {
@@ -56,3 +56,19 @@ arma::cube C_apply_rr(const arma::cube &x, const arma::mat rr, const arma::umat 
   return y;
 }
 
+/***************************************************************************//** 
+ * Interface to expm package
+ *******************************************************************************/
+typedef enum {Ward_2, Ward_1, Ward_buggy_octave} precond_type;
+void (*expmat)(double *x, int n, double *z, precond_type precond_kind);
+
+extern "C" void R_init_hesim(DllInfo *dll) { 
+  expmat = (void (*) (double*, int, double*, precond_type)) R_GetCCallable("expm", "expm"); 
+} 
+
+// [[Rcpp::export]]
+arma::mat C_expmat(arma::mat x) {
+  arma::mat z(x.n_rows, x.n_cols);
+  (*expmat)(x.begin(), x.n_rows, z.begin(), Ward_2);
+  return z;
+}

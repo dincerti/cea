@@ -9,4 +9,5 @@
 #' @import data.table
 #' @importFrom Rcpp evalCpp
 #' @importFrom ggplot2 .data
+#' @importFrom expm expm
 NULL
